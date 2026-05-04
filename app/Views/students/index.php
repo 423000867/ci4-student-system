@@ -28,3 +28,6 @@
     </tr>
     <?php endforeach; ?>
 </table>
+
+<br>
+<?= $pager->links() ?>
