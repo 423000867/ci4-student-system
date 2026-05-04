@@ -9,34 +9,19 @@ class Students extends BaseController
     public function index()
     {
         $model = new StudentModel();
-        $data['students'] = $model->findAll();
+
+        $keyword = $this->request->getGet('search');
+
+        if ($keyword) {
+            $data['students'] = $model
+                ->like('name', $keyword)
+                ->orLike('email', $keyword)
+                ->orLike('course', $keyword)
+                ->findAll();
+        } else {
+            $data['students'] = $model->findAll();
+        }
 
         return view('students/index', $data);
-    }
-
-    public function create()
-    {
-        return view('students/create');
-    }
-
-    public function store()
-    {
-        $model = new StudentModel();
-
-        $model->save([
-            'name' => $this->request->getPost('name'),
-            'email' => $this->request->getPost('email'),
-            'course' => $this->request->getPost('course'),
-        ]);
-
-        return redirect()->to('/students');
-    }
-
-    public function delete($id)
-    {
-        $model = new StudentModel();
-        $model->delete($id);
-
-        return redirect()->to('/students');
     }
 }
