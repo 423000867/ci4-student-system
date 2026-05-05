@@ -48,6 +48,30 @@ class Students extends BaseController
         return redirect()->to('/students');
     }
 
+    // ✅ NEW: EDIT FUNCTION
+    public function edit($id)
+    {
+        $model = new StudentModel();
+
+        $data['student'] = $model->find($id);
+
+        return view('students/edit', $data);
+    }
+
+    // ✅ NEW: UPDATE FUNCTION
+    public function update($id)
+    {
+        $model = new StudentModel();
+
+        $model->update($id, [
+            'name'   => $this->request->getPost('name'),
+            'email'  => $this->request->getPost('email'),
+            'course' => $this->request->getPost('course'),
+        ]);
+
+        return redirect()->to('/students');
+    }
+
     public function delete($id)
     {
         $model = new StudentModel();

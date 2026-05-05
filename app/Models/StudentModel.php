@@ -9,9 +9,10 @@ class StudentModel extends Model
     protected $table = 'students';
     protected $primaryKey = 'id';
 
-    protected $allowedFields = [
-        'name',
-        'email',
-        'course'
-    ];
+    protected $allowedFields = ['name', 'email', 'course'];
+
+    protected $useSoftDeletes = true;
+    protected $deletedField = 'deleted_at';
+
+    protected $useTimestamps = true;
 }
